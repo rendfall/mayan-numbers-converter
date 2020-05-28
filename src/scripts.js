@@ -5,8 +5,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const $result = document.getElementById('result');
     const glyphBuilder = new GlyphBuilder(160, 155);
 
-    $input.addEventListener('input', (event) => {
+    function updateView(value) {
         $result.innerHTML = '';
+
+        value.toString(20).split('')
+            .forEach((digit) => {
+                const glyph = glyphBuilder.buildGlyph(digit);
+                $result.appendChild(glyph);
+            });
+    }
+
+    $input.addEventListener('input', (event) => {
         const value = Number(event.target.value);
 
         if (Number.isNaN(value) || value < 0) {
@@ -14,10 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        value.toString(20).split('')
-            .forEach((digit) => {
-                const glyph = glyphBuilder.buildGlyph(digit);
-                $result.appendChild(glyph);
-            });
+        updateView(value);
     });
+
+    updateView($input.value);
 });
