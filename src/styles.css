@@ -1,0 +1,13 @@
+#input {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+#result {
+    display: flex;
+    flex-direction: column;
+}
+
+#result > svg {
+    margin: 15px;
+}
