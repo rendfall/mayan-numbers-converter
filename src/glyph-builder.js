@@ -7,7 +7,7 @@ export default class GlyphBuilder {
         this.strokeColor = '#fff';
         this.strokeWidth = 1;
         this.dotRadius = height/10|0;
-        this.lineHeight = height/6|0;
+        this.barHeight = height/6|0;
         this.svgBackground = '#e0e0e0';
         this.svgWidth = width;
         this.svgHeight = height;
@@ -15,17 +15,16 @@ export default class GlyphBuilder {
 
     buildGlyph(digit) {
         const number = Number.parseInt(digit, 20);
-        const linesCount = (number/5)|0;
+        const barsCount = (number/5)|0;
         const dotsCount = number%5;
         const dotsOffset = (dotsCount > 0) ? 1 : 0;
-        const glyphSize = linesCount + dotsOffset;
+        const glyphSize = barsCount + dotsOffset;
         const widthUnit = this.svgWidth / (dotsCount + 1);
         const heightUnit = this.svgHeight / (glyphSize + 1);
 
-        // zero
-        if (dotsCount === 0 && linesCount === 0) {
-            const zero = this.createZeroSVG();
-            return zero;
+        // zero (shell)
+        if (dotsCount === 0 && barsCount === 0) {
+            return this.createZeroSVG();
         }
 
         const svg = this.createSVG();
@@ -44,12 +43,12 @@ export default class GlyphBuilder {
             svg.appendChild(dots);
         }
 
-        // lines
-        for (let i = 0; i < linesCount; i++) {
-            const line = this.createLine();
-            line.setAttribute('x', 0);
-            line.setAttribute('y', ((i + dotsOffset + 1) * heightUnit) - this.lineHeight/2);
-            svg.appendChild(line);
+        // bars
+        for (let i = 0; i < barsCount; i++) {
+            const bar = this.createBar();
+            bar.setAttribute('x', 0);
+            bar.setAttribute('y', ((i + dotsOffset + 1) * heightUnit) - this.barHeight/2);
+            svg.appendChild(bar);
         }
 
         return svg;
@@ -110,14 +109,14 @@ export default class GlyphBuilder {
         return dot;
     }
 
-    createLine() {
-        const line = document.createElementNS(SVG_NAMESPACE_URI, 'rect');
-        line.setAttribute('fill', this.fillColor);
-        line.setAttribute('stroke', this.strokeColor);
-        line.setAttribute('stroke-width', this.strokeWidth);
-        line.setAttribute('width', this.svgWidth);
-        line.setAttribute('height', this.lineHeight);
-        return line;
+    createBar() {
+        const bar = document.createElementNS(SVG_NAMESPACE_URI, 'rect');
+        bar.setAttribute('fill', this.fillColor);
+        bar.setAttribute('stroke', this.strokeColor);
+        bar.setAttribute('stroke-width', this.strokeWidth);
+        bar.setAttribute('width', this.svgWidth);
+        bar.setAttribute('height', this.barHeight);
+        return bar;
     }
 
 }
