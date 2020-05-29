@@ -1,3 +1,14 @@
+.container {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+
+.mayan-relief {
+    width: auto;
+    height: 600px;
+}
+
 #input {
     font-size: 32px;
     margin-bottom: 15px;
@@ -10,4 +21,5 @@
 
 #result > svg {
     margin: 15px;
+    border-radius: 15px;
 }
