@@ -6,7 +6,8 @@ export default class GlyphBuilder {
         this.fillColor = '#000';
         this.strokeColor = '#fff';
         this.strokeWidth = 1;
-        this.dotRadius = height/10|0;
+        this.dotRadius = height/11|0;
+        this.barWidth = width/1.3|0;
         this.barHeight = height/6|0;
         this.svgBackground = '#e0e0e0';
         this.svgWidth = width;
@@ -45,7 +46,6 @@ export default class GlyphBuilder {
         // bars
         for (let i = 0; i < barsCount; i++) {
             const bar = this.createBar();
-            bar.setAttribute('x', 0);
             bar.setAttribute('y', ((i + dotsOffset + 1) * heightUnit) - this.barHeight/2);
             svg.appendChild(bar);
         }
@@ -137,7 +137,10 @@ export default class GlyphBuilder {
         bar.setAttribute('fill', this.fillColor);
         bar.setAttribute('stroke', this.strokeColor);
         bar.setAttribute('stroke-width', this.strokeWidth);
-        bar.setAttribute('width', this.svgWidth);
+        bar.setAttribute('width', this.barWidth);
+        bar.setAttribute('x', (this.svgWidth - this.barWidth)/2);
+        bar.setAttribute('rx', this.barHeight/2);
+        bar.setAttribute('ry', this.barHeight/2);
         bar.setAttribute('height', this.barHeight);
         return bar;
     }

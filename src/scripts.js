@@ -3,7 +3,7 @@ import GlyphBuilder from './glyph-builder.js';
 document.addEventListener('DOMContentLoaded', () => {
     const $input = document.getElementById('input');
     const $result = document.getElementById('result');
-    const glyphBuilder = new GlyphBuilder(160, 155);
+    const glyphBuilder = new GlyphBuilder(160, 160);
 
     function updateView(value) {
         $result.innerHTML = '';
