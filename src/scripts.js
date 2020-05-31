@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateView(value) {
         $result.innerHTML = '';
 
-        value.toString(20).split('')
-            .forEach((digit) => {
-                const glyph = glyphBuilder.buildGlyph(digit);
+        glyphBuilder.convertToMayaSystem(value)
+            .forEach((mayanDigit) => {
+                const glyph = glyphBuilder.buildGlyph(mayanDigit);
                 $result.appendChild(glyph);
             });
     }

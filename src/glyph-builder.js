@@ -13,10 +13,9 @@ export default class GlyphBuilder {
         this.svgHeight = height;
     }
 
-    buildGlyph(digit) {
-        const number = Number.parseInt(digit, 20);
-        const barsCount = (number/5)|0;
-        const dotsCount = number%5;
+    buildGlyph(mayanDigit) {
+        const barsCount = (mayanDigit/5)|0;
+        const dotsCount = mayanDigit%5;
         const dotsOffset = (dotsCount > 0) ? 1 : 0;
         const glyphSize = barsCount + dotsOffset;
         const widthUnit = this.svgWidth / (dotsCount + 1);
@@ -52,6 +51,30 @@ export default class GlyphBuilder {
         }
 
         return svg;
+    }
+
+    convertToMayaSystem(value) {
+        let position = 0;
+        let magnitudes = [1];
+        let nextMagnitude = 1;
+
+        while (value > nextMagnitude) {
+            position++;
+            nextMagnitude *= (position === 2) ? 18 : 20;
+            if (nextMagnitude <= value) {
+                magnitudes.push(nextMagnitude);
+            }
+        }
+
+        const glyphs = [];
+        magnitudes.reverse().reduce((acc, current) => {
+            const div = acc / current;
+            const mod = acc % current;
+            glyphs.push(div|0);
+            return mod;
+        }, value);
+
+        return glyphs;
     }
 
     createSVG() {
